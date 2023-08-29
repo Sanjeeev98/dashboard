@@ -1,0 +1,31 @@
+/* In your CSS file */
+.EmployeeTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .EmployeeTable th,
+  .EmployeeTable td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    font-family: monospace ;
+  }
+  
+  .EmployeeTable th {
+    background-color: #1DB954;
+    color: white;
+  }
+  
+  .EmployeeTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .EmployeeTable img {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+  
