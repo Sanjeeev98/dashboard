@@ -1,5 +1,5 @@
-.Container {
-    max-width: 500px;
+  .Container {
+    max-width: auto;
     margin: 0 auto;
     padding: 20px;
     background: #1DB954;
@@ -18,7 +18,9 @@
   }
   
   label {
-    display: block;
+    /* display: block; */
+    display: inline-block;
+    width: 15%;
     margin-top: 10px;
     color: white;
     font-weight: bold;
@@ -29,9 +31,12 @@
   input[type="number"],
   input[type="tel"],
   textarea {
-    width: 95%;
+    display: inline-block;
+    /* width: 95%; */
+    width: 75%; 
     padding: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
     border: none;
     border-radius: 5px;
     background: rgba(0, 0, 0, 0.2);
@@ -59,5 +64,34 @@
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
   }
+
+  div[name="qualification"] {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   
+  input[type="radio"] {
+    margin-right: 5px;
+  }
   
+
+  label input[type="radio"]::after {
+    content: " ";
+  }
+
+  input[type="radio"]:checked + label {
+    color: #007BFF; 
+  }
+   
+
+
+
+
+
+
+
+
+
+   

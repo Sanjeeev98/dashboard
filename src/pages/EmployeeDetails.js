@@ -125,6 +125,7 @@ function AddEmployee({ onAddEmployee }) {
   const [fathernumber,setFathernumber] = useState('');
   const [maritalstatus,setMaritalstatus] = useState('');
   const [gender,setGender] = useState('');
+  const [Qualification, setQualification] = useState("");
   const [degree,setDegree] = useState('');
   const [cgpa,setCgpa] = useState('');
   const [passedout,setPassedout] = useState('');
@@ -155,6 +156,7 @@ function AddEmployee({ onAddEmployee }) {
       fathernumber,
       maritalstatus,
       gender,
+      Qualification, 
       degree,
       cgpa,
       passedout,
@@ -172,6 +174,7 @@ function AddEmployee({ onAddEmployee }) {
    setFathernumber('');
    setMaritalstatus('');
    setGender('');
+   setQualification('');
    setDegree('');
    setCgpa('');
    setPassedout('');
@@ -310,6 +313,29 @@ function AddEmployee({ onAddEmployee }) {
               Female
             </label>
           </div>
+          <div>
+  <label>Qualification:</label>
+    <label>
+      <input
+        type="radio"
+        name="qualification"
+        value="HSC"
+        checked={Qualification === "HSC"}
+        onChange={() => setQualification("HSC")}
+      />
+      HSC
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="qualification"
+        value="Diploma"
+        checked={Qualification === "Diploma"}
+        onChange={() => setQualification("Diploma")}
+      />
+      Diploma
+    </label>
+</div>
             <div>
             <label htmlFor="cgpa">CGPA (Percentage):</label>
             <input
