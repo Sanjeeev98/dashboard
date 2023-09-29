@@ -10,7 +10,9 @@
     border: 1px solid black;
     padding: 8px;
     text-align: left;
-    font-family: monospace ;
+    /* font-family: monospace ; */
+    font-family:  Consolas, monaco, monospace;
+    font-weight: 300;
   }
   
   .EmployeeTable th {
@@ -29,3 +31,18 @@
     margin: 0 auto;
   }
   
+  /* input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: black;
+  }
+  
+  input[type="text"]:focus {
+    outline: none; /* Remove the default focus outline */
+    /* border-color: #007BFF;
+  }  */

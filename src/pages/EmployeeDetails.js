@@ -109,7 +109,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import "./Employeedetails.css"
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"></link>
 
@@ -126,10 +126,28 @@ function AddEmployee({ onAddEmployee }) {
   const [maritalstatus,setMaritalstatus] = useState('');
   const [gender,setGender] = useState('');
   const [Qualification, setQualification] = useState("");
+  const [hscMarks, setHSCMarks] = useState('');
+  const [hscSchoolName, setHSCSchoolName] = useState('');
+  const [hscPassedYear, setHSCPassedYear] = useState('');
+  const [hscPercentage, setHSCPercentage] = useState('');
+
+  const [diplomaMarks, setDiplomaMarks] = useState('');
+  const [diplomaCollegeName, setDiplomaCollegeName] = useState('');
+  const [diplomaPassedYear, setDiplomaPassedYear] = useState('');
+  const [diplomaSpecialization, setDiplomaSpecialization] = useState('');
+  const [diplomaPercentage, setDiplomaPercentage] = useState('');
+  const [diplomaClass, setDiplomaClass] = useState('');
+
+
   const [degree,setDegree] = useState('');
   const [cgpa,setCgpa] = useState('');
   const [passedout,setPassedout] = useState('');
   const [photo,setPhoto] = useState('');
+  const [totalAmount, setTotalAmount] = useState(30000); 
+  const [paidAmount, setPaidAmount] = useState(0); 
+  const [remainingAmount, setRemainingAmount] = useState(30000); 
+
+  const [employeeCount, setEmployeeCount] = useState(0);
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -142,9 +160,62 @@ function AddEmployee({ onAddEmployee }) {
     }
   };
 
+  useEffect(() => {
+    // Calculate the remaining amount whenever paidAmount changes
+    const newRemainingAmount = totalAmount - paidAmount;
+    setRemainingAmount(newRemainingAmount);
+  }, [totalAmount, paidAmount]);
+
+  useEffect(() => {
+    // Load the employee count from local storage on component mount
+    const savedCount = localStorage.getItem('employeeCount');
+    if (savedCount) {
+      setEmployeeCount(parseInt(savedCount));
+    }
+  }, []);
+
+  const handleRadioChange = (e) => {
+    const value = e.target.value;
+    setQualification(value);
+
+
+    // Show HSC Marks input if "HSC" is selected
+    if(value === 'HSC');
+    setHSCMarks('');
+    setHSCSchoolName('');
+      setHSCPassedYear('');
+      setHSCPercentage('');
+      setDiplomaMarks('');
+    setDiplomaCollegeName('');
+    setDiplomaPassedYear('');
+    setDiplomaSpecialization('');
+    setDiplomaPercentage('');
+    setDiplomaClass('');
+  };
+
+  const handleDiplomaClassChange = (e) => {
+    setDiplomaClass(e.target.value);
+  };
+
+  const handleTotalAmountChange = () => {
+    setTotalAmount(30000);
+  };
+
+  const handlePaidAmountChange = (e) => {
+    setPaidAmount(e.target.value);
+  };
+ 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setEmployeeCount(employeeCount + 1);
+
+ const id = `STU${employeeCount.toString().padStart(3, '0')}`;
+
+
     const newEmployee = {
+      id,
       firstname,
       lastname,
       fathername,
@@ -157,6 +228,16 @@ function AddEmployee({ onAddEmployee }) {
       maritalstatus,
       gender,
       Qualification, 
+      hscMarks,
+      hscSchoolName,
+      hscPassedYear,
+      hscPercentage,
+      diplomaMarks,
+      diplomaCollegeName,
+      diplomaPassedYear,
+      diplomaSpecialization,
+      diplomaPercentage,
+      diplomaClass,
       degree,
       cgpa,
       passedout,
@@ -179,6 +260,7 @@ function AddEmployee({ onAddEmployee }) {
    setCgpa('');
    setPassedout('');
    setPhoto('');
+   localStorage.setItem('employeeCount', employeeCount + 1);
   };
  
 
@@ -313,7 +395,9 @@ function AddEmployee({ onAddEmployee }) {
               Female
             </label>
           </div>
-          <div>
+
+
+    <div>
   <label>Qualification:</label>
     <label>
       <input
@@ -321,7 +405,8 @@ function AddEmployee({ onAddEmployee }) {
         name="qualification"
         value="HSC"
         checked={Qualification === "HSC"}
-        onChange={() => setQualification("HSC")}
+        // onChange={() => setQualification("HSC")}
+        onChange={handleRadioChange}
       />
       HSC
     </label>
@@ -331,11 +416,99 @@ function AddEmployee({ onAddEmployee }) {
         name="qualification"
         value="Diploma"
         checked={Qualification === "Diploma"}
-        onChange={() => setQualification("Diploma")}
+        // onChange={() => setQualification("Diploma")}
+        onChange={handleRadioChange}
       />
       Diploma
     </label>
-</div>
+
+    {Qualification === 'HSC' && (
+        <div>
+          <label htmlFor="hscMarks">HSC Marks:</label>
+          <input
+            type="number"
+            id="hscMarks"
+            value={hscMarks}
+            onChange={(e) => setHSCMarks(e.target.value)}
+          />
+          <label htmlFor="hscSchoolName">HSC School Name:</label>
+          <input
+            type="text"
+            id="hscSchoolName"
+            value={hscSchoolName}
+            onChange={(e) => setHSCSchoolName(e.target.value)}
+          />
+          <label htmlFor="hscPassedYear">HSC Passed Year:</label>
+          <input
+            type="number"
+            id="hscPassedYear"
+            value={hscPassedYear}
+            onChange={(e) => setHSCPassedYear(e.target.value)}
+          />
+          <label htmlFor="hscPercentage">HSC Percentage:</label>
+          <input
+            type="number"
+            id="hscPercentage"
+            value={hscPercentage}
+            onChange={(e) => setHSCPercentage(e.target.value)}
+          />
+        </div>
+      )}
+
+{Qualification === 'Diploma' && (
+        <div>
+          <label htmlFor="diplomaMarks">Diploma Marks:</label>
+          <input
+            type="number"
+            id="diplomaMarks"
+            value={diplomaMarks}
+            onChange={(e) => setDiplomaMarks(e.target.value)}
+          />  
+        <label htmlFor="diplomaCollegeName">Diploma CollegeName:</label>
+        <input
+          type="text"
+          id="diplomaCollegeName"
+          value={diplomaCollegeName}
+          onChange={(e) => setDiplomaCollegeName(e.target.value)}
+        />  
+        <label htmlFor="diplomaPassedYear">Diploma PassedYear:</label>
+        <input
+          type="number"
+          id="diplomaPassedYear"
+          value={diplomaPassedYear}
+          onChange={(e) => setDiplomaPassedYear(e.target.value)}
+        /> 
+        <label htmlFor="diplomaSpecialization">Diploma Specialization:</label>
+        <input
+          type="text"
+          id="diplomaSpecialization"
+          value={diplomaSpecialization}
+          onChange={(e) => setDiplomaSpecialization(e.target.value)}
+        /> 
+
+        <label htmlFor="diplomaPercentage">Diploma Percentage:</label>
+        <input
+          type="text"
+          id="diplomaPercentage"
+          value={diplomaPercentage}
+          onChange={(e) => setDiplomaPercentage(e.target.value)}
+        /> 
+        
+        <label htmlFor="diplomaClass">Diploma Class:</label>
+          <select
+            id="diplomaClass"
+            value={diplomaClass}
+            onChange={handleDiplomaClassChange}
+          >
+            <option value="">Select</option>
+            <option value="First">First</option>
+            <option value="Second">Second</option>
+          </select>
+      </div>
+      
+)}
+  </div>
+           
             <div>
             <label htmlFor="cgpa">CGPA (Percentage):</label>
             <input
@@ -349,6 +522,8 @@ function AddEmployee({ onAddEmployee }) {
             />
             %
           </div>
+
+
         <div>
           <label htmlFor="passedout">PassedOut Year:</label>
           <input
@@ -358,6 +533,39 @@ function AddEmployee({ onAddEmployee }) {
             onChange={(e) => setPassedout(e.target.value)}
           />
         </div>
+
+
+        <div>
+            <label htmlFor="totalAmount">Total Amount:</label>
+            <input
+              type="number"
+              id="totalAmount"
+              value={totalAmount}
+              readOnly // Make this field read-only
+              onChange={handleTotalAmountChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="paidAmount">Paid Amount:</label>
+            <input
+              type="number"
+              id="paidAmount"
+              value={paidAmount}
+              onChange={handlePaidAmountChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="remainingAmount">Remaining Amount:</label>
+            <input
+              type="number"
+              id="remainingAmount"
+              value={remainingAmount}
+              readOnly 
+            />
+          </div>
+
+
+
         <div>
         <label htmlFor="photo">Photo:</label>
         <input

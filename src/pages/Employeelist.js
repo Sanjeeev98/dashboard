@@ -22,45 +22,34 @@
 
 
 
-
-import React from 'react';
+import React, { useState } from 'react';
 import "./Employeelist.css"
 
 function EmployeeList({ employees, onDeleteEmployee }) {
-    console.log(employees);
+  const [searchInput, setSearchInput] = useState('');
+
+  // Filter employees based on the search input
+  const filteredEmployees = employees.filter((employee) => {
+    const searchValue = searchInput.toLowerCase();
+    return (
+      employee.firstname.toLowerCase().includes(searchValue) ||
+      employee.lastname.toLowerCase().includes(searchValue) ||
+      employee.contact.includes(searchValue) 
+      // Add more fields as needed for searching
+      // Example: employee.email.toLowerCase().includes(searchValue)
+    );
+  });
+    // console.log(employees);
   return (
     <>
-    {/* <div>
-      <h2>Employee List</h2>
-      <ul>
-        {employees.map((employee, index) => (
-          <li key={index}>
-            <strong>First Name:</strong> {employee.firstname} <br/>
-             <strong>Last Name:</strong> {employee.lastname}  <br/>
-             <strong>Father Name:</strong> {employee.fathername}  <br/>
-             <strong>Mother Name:</strong> {employee.mothername}  <br/>
-             <strong>Email:</strong> {employee.email}  <br/>
-             <strong>Address:</strong> {employee.address}  <br/>
-             <strong>DOB:</strong> {employee.dob}  <br/>
-             <strong>Contact:</strong> {employee.contact}  <br/>
-             <strong>Father Number:</strong> {employee.fathernumber}  <br/>
-             <strong>Marital Status:</strong> {employee.maritalstatus}  <br/>
-             <strong>Gender:</strong> {employee.gender}  <br/>
-             <strong>Degree:</strong> {employee.degree}  <br/>
-             <strong>CGPA:</strong> {employee.cgpa}  <br/>
-             <strong>PassedOut Year:</strong> {employee.passedout}  <br/>
-             {employee.photo && <img src={employee.photo} alt={`Photo of ${employee.name}`} />}
-          
-
-            <button onClick={() => onDeleteEmployee(index)}>Delete </button>
-          </li>
-
-        ))}
-      </ul>
-    </div> */}
-    
-
-
+     <div>
+        <input
+          type="text"
+          placeholder="Search by name or contact"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </div>
 
 
     <div>
@@ -68,6 +57,7 @@ function EmployeeList({ employees, onDeleteEmployee }) {
   <table className="EmployeeTable">
     <thead>
       <tr>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Father Name</th>
@@ -79,6 +69,17 @@ function EmployeeList({ employees, onDeleteEmployee }) {
         <th>Father Number</th>
         <th>Marital Status</th>
         <th>Gender</th>
+        <th>Qualification</th>
+        <th>Hsc Marks</th>
+        <th>Hsc School Name</th>
+        <th>Hsc PassedYear</th>
+        <th>Hsc Percentage</th>
+        <th>Diploma Marks</th>
+        <th>Diploma CollegeName</th>
+        <th>Diploma PassedYear</th>
+        <th>Diploma Specialization</th>
+        <th>Diploma Percentage</th>
+        <th>Diploma Class</th>
         <th>Degree</th>
         <th>CGPA</th>
         <th>PassedOut Year</th>
@@ -87,8 +88,9 @@ function EmployeeList({ employees, onDeleteEmployee }) {
       </tr>
     </thead>
     <tbody>
-      {employees.map((employee, index) => (
+      {filteredEmployees.map((employee, index) => (
         <tr key={index}>
+           <td>{employee.id}</td>
           <td>{employee.firstname}</td>
           <td>{employee.lastname}</td>
           <td>{employee.fathername}</td>
@@ -100,6 +102,17 @@ function EmployeeList({ employees, onDeleteEmployee }) {
           <td>{employee.fathernumber}</td>
           <td>{employee.maritalstatus}</td>
           <td>{employee.gender}</td>
+          <td>{employee.Qualification}</td>
+          <td>{employee.hscMarks}</td>
+          <td>{employee.hscSchoolName}</td>
+          <td>{employee.hscPassedYear}</td>
+          <td>{employee.hscPercentage}</td>
+          <td>{employee.diplomaMarks}</td>
+          <td>{employee.diplomaCollegeName}</td>
+          <td>{employee.diplomaPassedYear}</td>
+          <td>{employee.diplomaSpecialization}</td>
+          <td>{employee.diplomaPercentage}</td>
+          <td>{employee.diplomaClass}</td>
           <td>{employee.degree}</td>
           <td>{employee.cgpa}%</td>
           <td>{employee.passedout}</td>
