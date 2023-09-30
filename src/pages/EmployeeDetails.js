@@ -110,7 +110,7 @@
 
 
 import React, { useState , useEffect} from 'react';
-import "./Employeedetails.css"
+import "./Employeedetails.css";
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"></link>
 
 function AddEmployee({ onAddEmployee }) {
@@ -166,13 +166,13 @@ function AddEmployee({ onAddEmployee }) {
     setRemainingAmount(newRemainingAmount);
   }, [totalAmount, paidAmount]);
 
-  useEffect(() => {
-    // Load the employee count from local storage on component mount
-    const savedCount = localStorage.getItem('employeeCount');
-    if (savedCount) {
-      setEmployeeCount(parseInt(savedCount));
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Load the employee count from local storage on component mount
+  //   const savedCount = localStorage.getItem('employeeCount');
+  //   if (savedCount) {
+  //     setEmployeeCount(parseInt(savedCount));
+  //   }
+  // }, []);
 
   const handleRadioChange = (e) => {
     const value = e.target.value;
@@ -265,6 +265,7 @@ function AddEmployee({ onAddEmployee }) {
  
 
   return (
+    
     <div className='Container'>
       <h2>STUDENT ENTRY FORM</h2>
       <form onSubmit={handleSubmit}>
@@ -520,7 +521,7 @@ function AddEmployee({ onAddEmployee }) {
               value={cgpa}
               onChange={(e) => setCgpa(e.target.value)} 
             />
-            %
+            
           </div>
 
 
